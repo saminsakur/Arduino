@@ -2,14 +2,14 @@
 
 //MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 //Alarm reciever's phone number with country code
-const String PHONE_1 = "ENTER_PHONE_NUMBER_HERE";
+const String PHONE_1 = "+8801765998490";
 const String PHONE_2 = ""; //optional
 const String PHONE_3 = ""; //optional
 //MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 
 //MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-#define rxPin 2
-#define txPin 3
+#define rxPin 3
+#define txPin 2
 SoftwareSerial sim800L(rxPin,txPin);
 //MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 
@@ -22,6 +22,9 @@ boolean fire_flag = 0;
 //MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 #define buzzer_pin 4
 //MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+
+#define motor_pin_1 6
+#define motor_pin_2 7
 
 void setup()
 {
@@ -60,9 +63,11 @@ void loop()
   
   //MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
   //The fire is detected, trigger Alarm and send sms
-  if(flame_value == HIGH)
+  if(flame_value == LOW)
   {
     digitalWrite(buzzer_pin,HIGH);
+    digitalWrite(motor_pin_1, HIGH);
+    digitalWrite(motor_pin_2,LOW);
     //----------------------------------------------------------------
     if(fire_flag == 0)
     {
@@ -78,6 +83,9 @@ void loop()
   else
   {
     digitalWrite(buzzer_pin,LOW);
+    digitalWrite(motor_pin_1, HIGH);
+    digitalWrite(motor_pin_2, HIGH);
+
     fire_flag = 0;
   }
   //MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
